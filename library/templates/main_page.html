@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}List of Entries
+{% endblock %}
+
+{% block content %}
+    {{ special }}
+{% include 'list.html' %}
+    {% include 'form.html' %}
+{% endblock %}

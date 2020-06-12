@@ -1,0 +1,8 @@
+django
+namegenerator
+names
+django-tables2
+flake8
+bibtexparser
+
+

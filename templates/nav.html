@@ -1,0 +1,8 @@
+<form action="/lib/#" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea id="tex" name="tex"></textarea>
+        {{ form.url }}
+        {{ form.file }}
+    <p><input type="submit" value="Upload"/></p>
+</form><hr>
+<a class="btn btn-primary" href="/lib/bibtex"> download bibtex</a>
