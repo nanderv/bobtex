@@ -30,3 +30,6 @@ BobTex has some revolutionary features:
 2. Storing your PDF's and links with your bibtex sources
 3. Being totally free and hackable
 4. Being cobbled together in under a week of part-time development
+
+## Design considerations
+BobTex is designed with local use in mind; the idea is that an instance is created for one small group (ie. a small group within a faculty, or a single person). Therefore, things like user privacy were not taken into account when designing BobTex. Also, features such as password reset were not seen as important, because it's assumed that the user either *is* the administrator, or knows the administrator personally.
