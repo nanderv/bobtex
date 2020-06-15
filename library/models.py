@@ -52,7 +52,6 @@ class SimpleItemTable(tables.Table):
     options = tables.Column(empty_values=(), orderable=False)
 
     def render_options(self, record):
-        print(record)
         if record.file:
             return format_html(
                 '<a href="/lib/{}"><i class="fa fa-download"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.file,

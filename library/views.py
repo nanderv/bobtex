@@ -70,7 +70,6 @@ def form_edit(request, id):
         if form.is_valid():
             form.save()
             special = "Succesful upload!"
-            print("SAVE")
             obj = SimpleItem.objects.get(pk=id)
             form = UploadFileForm(instance=obj)
     else:
