@@ -52,3 +52,32 @@ def full_tex(request):
         tex = tex+"\n\n"+item.tex
 
     return HttpResponse(tex, content_type="text")
+
+def form_edit(request, id):
+    obj = SimpleItem.objects.get(pk=id)
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES, instance=obj)
+        doi = request.POST["tex"]
+        if form.is_valid():
+            form.save()
+            special = "Succesful upload!"
+            print("SAVE")
+            obj = SimpleItem.objects.get(pk=id)
+            form = UploadFileForm(instance=obj)
+    else:
+        obj = SimpleItem.objects.get(pk=id)
+        form = UploadFileForm(instance=obj)
+
+    return render(request, 'form.html', {"form": form})
+
+def form_new(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        doi = request.POST["tex"]
+        if form.is_valid():
+            form.save()
+            special = "Succesful upload!"
+    else:
+        form = UploadFileForm()
+
+    return render(request, 'form.html', {"form": form})

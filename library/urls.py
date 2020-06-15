@@ -18,12 +18,15 @@ from django.contrib import admin
 from django.urls import path
 
 import library.urls
-from library.views import show_all, delete, full_tex, delete_maybe
+from library.views import show_all, delete, full_tex, delete_maybe, form_edit, form_new
 
 urlpatterns = [
                   path('delete-maybe/<slug:id>', delete_maybe),
                   path('delete/<slug:id>', delete),
                   path('bibtex', full_tex),
+                  path('edit/<slug:id>', form_edit),
+                  path('new', form_new),
                   path('', show_all),
+
 
               ] + static('uploads', document_root='uploads')

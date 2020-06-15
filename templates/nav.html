@@ -1,15 +1,12 @@
-<form action="/lib/#" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="tex">Tex</label><br/>
-    <textarea id="tex" name="tex" style="width:80%;height:200px;"></textarea><br/>
-    <hr>
-    <label for="url">Url</label><br/>{{ form.url }}<br/>
-    <hr>
-    <label for="file">file</label><br/>
-    {{ form.file }}
-    <hr>
-    </table>
-    <p><input type="submit" value="Upload"/></p>
-</form>
-<hr>
-<a class="btn btn-primary" href="/lib/bibtex"> download bibtex</a>
+<ul class="sidebar-menu">
+    <li class="treeview"><a href="/lib">
+        <i class="fa fa-book"></i><span>list</span>
+    </a></li>
+    <li class="treeview"><a href="/lib/new">
+        <i class="fa fa-plus"></i><span>new item</span>
+    </a></li>
+        <li class="treeview"><a class="btn btn-primary" href="/lib/bibtex">
+        <i class="fa fa-download"></i><span>Download Bibtex</span>
+    </a></li>
+</ul>
+
