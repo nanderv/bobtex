@@ -8,5 +8,15 @@
         <li class="treeview"><a class="btn btn-primary" href="/lib/bibtex">
         <i class="fa fa-download"></i><span>Download Bibtex</span>
     </a></li>
+        {% if user.is_authenticated %}
+
+            <li class="treeview"><a href="{% url 'logout' %}">
+            <i class="fa fa-plane"></i><span>Logout</span>
+        </a></li>
+            {% else %}
+        <li class="treeview"><a href="{% url 'login' %}"><i
+            class="fa fa-plane"></i><span>Login</span>
+        </a></li>
+    {% endif %}
 </ul>
 

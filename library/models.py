@@ -48,15 +48,16 @@ class SimpleItemTable(tables.Table):
     authors = tables.Column(empty_values=())
     title = tables.Column(empty_values=())
     year = tables.Column(empty_values=())
-    doc_ID = tables.Column(        verbose_name="ID"
-)
+    doc_ID = tables.Column(verbose_name="ID")
     options = tables.Column(empty_values=(), orderable=False)
 
     def render_options(self, record):
         print(record)
         if record.file:
-            return format_html('<a href="/lib/{}"><i class="fa fa-download"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.file, record.pk, record.pk)
+            return format_html(
+                '<a href="/lib/{}"><i class="fa fa-download"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.file,
+                record.pk, record.pk)
         if record.url:
-            return format_html('<a href="{}"><i class="fa fa-plane"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a>', record.url, record.pk, record.pk)
-        return format_html('<a href="/lib/edit/{}">  <i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}">i class="fa fa-trash"></a></a>', record.url, record.pk, record.pk)
-
+            return format_html('<a href="{}"><i class="fa fa-plane"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a>',
+                               record.url, record.pk, record.pk)
+        return format_html('<a href="/lib/edit/{}">  <i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.pk, record.pk)
