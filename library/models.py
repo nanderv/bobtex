@@ -60,3 +60,4 @@ class SimpleItemTable(tables.Table):
             return format_html('<a href="{}"><i class="fa fa-plane"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a>',
                                record.url, record.pk, record.pk)
         return format_html('<a href="/lib/edit/{}">  <i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.pk, record.pk)
+
