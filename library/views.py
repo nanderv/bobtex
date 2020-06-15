@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django_tables2 import RequestConfig, LazyPaginator
+
 from library.models import SimpleItem, SimpleItemTable
 
 from django import forms
@@ -29,7 +31,10 @@ def show_all(request):
             special = "Succesful upload!"
     else:
         form = UploadFileForm()
-    return render(request, 'main_page.html', {"table": SimpleItemTable(SimpleItem.objects.all()), "data": SimpleItem.objects.all(), "form": form, "special":special})
+
+    table =  SimpleItemTable(SimpleItem.objects.all())
+    RequestConfig(request, paginate=False).configure(table)
+    return render(request, 'main_page.html', {"table": table, "data": SimpleItem.objects.all(), "form": form, "special":special})
 
 
 def delete_maybe(request, id):

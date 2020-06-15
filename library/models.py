@@ -28,12 +28,29 @@ class SimpleItem(models.Model):
     def title(self):
         return self.parse_bibtex()["title"]
 
+    @property
+    def ID(self):
+        return self.parse_bibtex()["ID"]
+
 
 class SimpleItemTable(tables.Table):
     authors = tables.Column(empty_values=())
     title = tables.Column(empty_values=())
     year = tables.Column(empty_values=())
-    options = tables.Column(empty_values=())
+    ID = tables.Column()
+    options = tables.Column(empty_values=(), orderable=False)
+
+    def order_title(self, queryset, is_descending):
+        return sorted(queryset, key=lambda q: q.title.replace("{", ""), reverse=is_descending), True
+
+    def order_year(self, queryset, is_descending):
+        return sorted(queryset, key=lambda q: q.year, reverse=is_descending), True
+
+    def order_authors(self, queryset, is_descending):
+        return sorted(queryset, key=lambda q: q.authors.replace("{", ""), reverse=is_descending), True
+
+    def order_ID(self, queryset, is_descending):
+        return sorted(queryset, key=lambda q: q.ID, reverse=is_descending), True
 
     def render_options(self, record):
         print(record)
