@@ -1,26 +1,3 @@
 {% load render_table from django_tables2 %}
-{#<table class="table table-striped" style="width: auto;">#}
-{#    <tr>#}
-{#        <th>Author</th>#}
-{#        <th>Title</th>#}
-{#        <th>Year</th>#}
-{#        <th>Code</th>#}
-{#        <th>Actions</th>#}
-{#    </tr>#}
-{#    {% for obj in data %}#}
-{#        {% with line=obj.parse_bibtex %}#}
-{#            <tr>#}
-{#                <td>{{ line.author }}</td>#}
-{#                <td>{{ line.title }}</td>#}
-{#            <td>{{ line.year }}</td>#}
-{#            <td>{{ line.ID }}</td>#}
-{#                <td><a>{% if obj.file %}<a href="/lib/{{ obj.file }}">download</a>{% endif %}#}
-{#                    {% if obj.url %}<a href="{{ obj.url }}">goto</a>{% endif %}#}
-{#                    <a href="/lib/delete-maybe/{{ obj.pk }}">Delete</a></td>#}
-{#            </tr>#}
-{#        {% endwith %}#}
-{#    {% endfor %}#}
-{##}
-{#</table>#}
 
-        {% render_table table %}
+{% render_table table %}

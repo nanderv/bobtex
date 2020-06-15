@@ -32,7 +32,7 @@ def show_all(request):
     else:
         form = UploadFileForm()
 
-    table =  SimpleItemTable(SimpleItem.objects.all())
+    table = SimpleItemTable(SimpleItem.objects.all())
     RequestConfig(request, paginate=False).configure(table)
     return render(request, 'main_page.html', {"table": table, "data": SimpleItem.objects.all(), "form": form, "special":special})
 

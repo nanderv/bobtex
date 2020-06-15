@@ -35,14 +35,14 @@
 
 <div id="wrapper">
     <div id="header" style="height:100%; justify-content: center;">
-        <p  style="height:100%;">BobTex</p>
+        <p style="height:100%;">BobTex</p>
 
     </div>
     <!-- Sidebar Holder -->
     <button id="toggle-sidebar"><</button>
     {% if not user.is_anonymous %}
         <div id="sidebar-header" class="collapsed loggedin">
-            {{user.username}}</div>>
+            {{ user.username }}</div>
     {% else %}
         <div id="sidebar-header" class="collapsed">
 
@@ -85,5 +85,5 @@
         toggleSidebar.innerText = sidebar.classList.contains('collapsed') ? '>' : '<';
     };
 </script>
-
+</body>
 </html>
