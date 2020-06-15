@@ -1,8 +1,17 @@
 <form action="/lib/#" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <textarea id="tex" name="tex"></textarea>
-        {{ form.url }}
-        {{ form.file }}
+    <label for="tex">Tex</label><br/>
+    <textarea id="tex" name="tex" style="width:80%;height:200px;"></textarea><br/>
+    <hr>
+    <label for="url">Url</label><br/>{{ form.url }}<br/>
+    <hr>
+    <label for="file">file</label><br/>
+
+    {{ form.file }}
+
+    <hr>
+    </table>
     <p><input type="submit" value="Upload"/></p>
-</form><hr>
+</form>
+<hr>
 <a class="btn btn-primary" href="/lib/bibtex"> download bibtex</a>

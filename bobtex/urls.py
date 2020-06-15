@@ -21,5 +21,5 @@ import library.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('lib/', include('library.urls')),
-
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

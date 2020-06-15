@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
-from library.models import SimpleItem
+from library.models import SimpleItem, SimpleItemTable
 
 from django import forms
 
@@ -29,7 +29,7 @@ def show_all(request):
             special = "Succesful upload!"
     else:
         form = UploadFileForm()
-    return render(request, 'main_page.html', {"data": SimpleItem.objects.all(), "form": form, "special":special})
+    return render(request, 'main_page.html', {"table": SimpleItemTable(SimpleItem.objects.all()), "data": SimpleItem.objects.all(), "form": form, "special":special})
 
 
 def delete_maybe(request, id):
@@ -39,7 +39,6 @@ def delete_maybe(request, id):
 def delete(request, id):
     SimpleItem.objects.filter(pk=id).delete()
     return show_all(request)
-
 
 
 def full_tex(request):
