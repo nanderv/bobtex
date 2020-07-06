@@ -5,7 +5,7 @@ from django.shortcuts import render
 # Create your views here.
 from django_tables2 import RequestConfig, LazyPaginator
 
-from library.models import SimpleItem, SimpleItemTable
+from library.models import Item, ItemTable
 
 from django import forms
 
@@ -17,11 +17,11 @@ class UploadFileForm(forms.ModelForm):
         self.fields['url'].required = False
 
     class Meta:
-        model = SimpleItem
-        fields = ['tex', 'file', 'url']
+        model = Item
+        fields = ['tex', 'summary', 'file', 'url']
 
 
-@permission_required('library.view_simpleitem')
+@permission_required('library.view_item')
 def show_all(request):
     special = ""
     form = None
@@ -33,60 +33,65 @@ def show_all(request):
             special = "Succesful upload!"
     else:
         form = UploadFileForm()
-
-    table = SimpleItemTable(SimpleItem.objects.all())
+    t = Item.objects.filter(project=request.user.default_project)
+    table = ItemTable(t)
     RequestConfig(request, paginate=False).configure(table)
-    return render(request, 'main_page.html', {"table": table, "data": SimpleItem.objects.all(), "form": form, "special": special})
+    return render(request, 'main_page.html', {"table": table, "data": t, "form": form, "special": special})
 
 
-@permission_required('library.delete_simpleitem')
+@permission_required('library.delete_item')
 def delete_maybe(request, id):
     return render(request, 'delete_maybe.html', {"id": id})
 
 
-@permission_required('library.delete_simpleitem')
+@permission_required('library.delete_item')
 def delete(request, id):
-    SimpleItem.objects.filter(pk=id).delete()
+    Item.objects.filter(pk=id).delete()
     return show_all(request)
 
 
-@permission_required('library.view_simpleitem')
+@permission_required('library.view_item')
 def full_tex(request):
     tex = ""
-    for item in SimpleItem.objects.all():
+    for item in Item.objects.all():
         tex = tex + "\n\n" + item.tex
 
     return HttpResponse(tex, content_type="text")
 
 
-@permission_required('library.change_simpleitem')
+@permission_required('library.change_item')
 def form_edit(request, id):
     special = ""
 
-    obj = SimpleItem.objects.get(pk=id)
+    obj = Item.objects.get(pk=id)
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES, instance=obj)
+        print(form)
+
         doi = request.POST["tex"]
         if form.is_valid():
             form.save()
             special = "Succesful upload!"
-            obj = SimpleItem.objects.get(pk=id)
+            obj = Item.objects.get(pk=id)
             form = UploadFileForm(instance=obj)
     else:
-        obj = SimpleItem.objects.get(pk=id)
+        obj = Item.objects.get(pk=id)
         form = UploadFileForm(instance=obj)
 
     return render(request, 'form.html', {"form": form, "special": special})
 
 
-@permission_required('library.add_simpleitem')
+@permission_required('library.add_item')
 def form_new(request):
     special = ""
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
+
         doi = request.POST["tex"]
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.project = request.user.default_project
+            instance.save()
             special = "Succesful upload!"
             form = UploadFileForm()
     else:

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Form for entry {% if form.instance.pk %} {{ form.instance.pk }} {% else %} NEW {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ special }}
+    <form action="#" method="post" enctype="multipart/form-data">
+        {{ form }}
+    {% csrf_token %}
+        <p><input type="submit" value="Upload"/></p>
+    </form>
+    <hr>
+{% endblock %}

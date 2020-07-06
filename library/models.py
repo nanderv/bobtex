@@ -4,10 +4,13 @@ import bibtexparser
 
 # Create your models here.
 import django_tables2 as tables
+from django.db.models import CASCADE, SET_NULL
 from django.utils.html import format_html
 
+from projects.models import Project
 
-class SimpleItem(models.Model):
+
+class Item(models.Model):
     file = models.FileField(null=True, blank=True, upload_to="uploads/")
     tex = models.TextField()
     url = models.CharField(max_length=255, null=True, blank=True)
@@ -15,6 +18,8 @@ class SimpleItem(models.Model):
     authors = models.CharField(max_length=255)
     doc_ID = models.CharField(max_length=255)
     year = models.IntegerField()
+    project = models.ForeignKey(Project, on_delete=CASCADE, null=True)
+    summary = models.TextField(default="")
 
     def save(self, *args, **kwargs):
         self.title = self.my_title
@@ -44,7 +49,7 @@ class SimpleItem(models.Model):
         return self.parse_bibtex()["ID"]
 
 
-class SimpleItemTable(tables.Table):
+class ItemTable(tables.Table):
     authors = tables.Column(empty_values=())
     title = tables.Column(empty_values=())
     year = tables.Column(empty_values=())
@@ -54,10 +59,21 @@ class SimpleItemTable(tables.Table):
     def render_options(self, record):
         if record.file:
             return format_html(
-                '<a href="/lib/{}"><i class="fa fa-download"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.file,
-                record.pk, record.pk)
+                '<i class="fa fa-info"  data-toggle="tooltip" data-placement="top" title="' + record.summary + '"></i>' +
+                '<a href="/lib/{}"><i class="fa fa-lg fa-download"></i></a>' +
+                '<a href="/lib/edit/{}"><i class="fa fa-lg fa-edit"></i></a>' +
+                '<a href="/lib/delete-maybe/{}"><i class="fa fa-lg fa-trash"></a></a>', record.file, record.pk, record.pk)
         if record.url:
-            return format_html('<a href="{}"><i class="fa fa-plane"></i></a><a href="/lib/edit/{}"><i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a>',
-                               record.url, record.pk, record.pk)
-        return format_html('<a href="/lib/edit/{}">  <i class="fa fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa fa-trash"></a></a>', record.pk, record.pk)
+            return format_html(
+                '<i class="fa fa-info"  data-toggle="tooltip" data-placement="top" title="' + record.summary + '"></i>' +
+                '<a href="{}"><i class="fa  fa-lg fa-plane"></i></a><a href="/lib/edit/{}">' +
+                '<i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}">' +
+                '<i class="fa fa-lg fa-trash"></a>',
+                record.url, record.pk, record.pk)
+        return format_html('<i class="fa fa-info"  data-toggle="tooltip" data-placement="top" title="' + record.summary + '"></i>' +
+                           '<a href="/lib/edit/{}">  <i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa  fa-lg fa-trash"></a></a>', record.pk, record.pk)
 
+
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+    item = models.ForeignKey(Item, on_delete=CASCADE)

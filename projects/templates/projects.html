@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}List of Entries
+{% endblock %}
+
+{% block content %}
+    {{ special }}
+{% include 'project_list.html' %}
+    <hr>
+    <h1><a href="/projects/new">New project</a></h1>
+{% endblock %}
