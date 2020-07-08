@@ -34,7 +34,7 @@ class Item(models.Model):
 
     @property
     def my_authors(self):
-        return self.parse_bibtex()["author"]
+        return self.parse_bibtex()["author"][0:40]
 
     @property
     def my_year(self):
