@@ -50,11 +50,15 @@ class Item(models.Model):
 
 
 class ItemTable(tables.Table):
-    authors = tables.Column(empty_values=())
+    authors = tables.Column(empty_values=() )
     title = tables.Column(empty_values=())
     year = tables.Column(empty_values=())
     doc_ID = tables.Column(verbose_name="ID")
     options = tables.Column(empty_values=(), orderable=False)
+
+    def render_authors(self, value, record):
+        return format_html("<p  data-toggle='tooltip data-placement='top' title='{}'>{}</b>", record.authors, record.authors[0:40])
+
 
     def render_options(self, record):
         if record.file:
