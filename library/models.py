@@ -48,7 +48,20 @@ class Item(models.Model):
     def my_ID(self):
         return self.parse_bibtex()["ID"]
 
+    def render_authors(record):
+        return format_html("<p  data-toggle='tooltip data-placement='top' title='{}'>{}</b>", record.authors, record.authors[0:40])
 
+    def render_item_options(record):
+        if record.file:
+            return format_html('<a href="/lib/{}"><i class="fa fa-lg fa-download"></i></a>' +
+                '<a href="/lib/edit/{}"><i class="fa fa-lg fa-edit"></i></a>' +
+                '<a href="/lib/delete-maybe/{}"><i class="fa fa-lg fa-trash"></a></a>', record.file, record.pk, record.pk)
+        if record.url:
+            return format_html('<a href="{}"><i class="fa  fa-lg fa-plane"></i></a><a href="/lib/edit/{}">' +
+                '<i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}">' +
+                '<i class="fa fa-lg fa-trash"></a>',
+                record.url, record.pk, record.pk)
+        return format_html('<a href="/lib/edit/{}">  <i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa  fa-lg fa-trash"></a></a>', record.pk, record.pk)
 class ItemTable(tables.Table):
     authors = tables.Column(empty_values=() )
     title = tables.Column(empty_values=())
@@ -57,25 +70,10 @@ class ItemTable(tables.Table):
     options = tables.Column(empty_values=(), orderable=False)
 
     def render_authors(self, value, record):
-        return format_html("<p  data-toggle='tooltip data-placement='top' title='{}'>{}</b>", record.authors, record.authors[0:40])
-
+        return render_authors(record)
 
     def render_options(self, record):
-        if record.file:
-            return format_html(
-                '<i class="fa fa-info"  data-toggle="tooltip" data-placement="top" title="' + record.summary + '"></i>' +
-                '<a href="/lib/{}"><i class="fa fa-lg fa-download"></i></a>' +
-                '<a href="/lib/edit/{}"><i class="fa fa-lg fa-edit"></i></a>' +
-                '<a href="/lib/delete-maybe/{}"><i class="fa fa-lg fa-trash"></a></a>', record.file, record.pk, record.pk)
-        if record.url:
-            return format_html(
-                '<i class="fa fa-info"  data-toggle="tooltip" data-placement="top" title="' + record.summary + '"></i>' +
-                '<a href="{}"><i class="fa  fa-lg fa-plane"></i></a><a href="/lib/edit/{}">' +
-                '<i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}">' +
-                '<i class="fa fa-lg fa-trash"></a>',
-                record.url, record.pk, record.pk)
-        return format_html('<i class="fa fa-info"  data-toggle="tooltip" data-placement="top" title="' + record.summary + '"></i>' +
-                           '<a href="/lib/edit/{}">  <i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa  fa-lg fa-trash"></a></a>', record.pk, record.pk)
+        return render_item_options(record)
 
 
 class Tag(models.Model):

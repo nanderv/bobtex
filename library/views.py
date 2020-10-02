@@ -36,6 +36,7 @@ def show_all(request):
     t = Item.objects.filter(project=request.user.default_project)
     table = ItemTable(t)
     RequestConfig(request, paginate=False).configure(table)
+
     return render(request, 'main_page.html', {"table": table, "data": t, "form": form, "special": special})
 
 

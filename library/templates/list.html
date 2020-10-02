@@ -1,3 +1,9 @@
 {% load render_table from django_tables2 %}
 
-{% render_table table %}
+<table class="">
+<tr><th>ID</th><th>Authors</th><th>Title</th><th>Year</th><th>Options</th></tr>
+{% for item in data %}
+    <tr  data-toggle="collapse" data-target="#collapse{{ item.pk }}"><td>{{ item.pk }}</td><td>{{ item.render_authors }}</td><td>{{ item.title }}</td><td>{{ item.year }}</td><td>{{ item.render_item_options }}</td></tr>
+    <tr class="collapse out" id="collapse{{ item.pk }}"><td colspan="5"><div class="card">{{ item.summary}}</div></td></tr>
+{% endfor %}
+</table>
