@@ -1,3 +1,5 @@
+import urllib
+
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -83,6 +85,14 @@ def form_edit(request, id):
         form = UploadFileForm(instance=obj)
     rendered = render_md(my_summary)
     return render(request, 'form.html', {"form": form, "special": special, 'rendered': rendered})
+
+
+@permission_required('library.change_item')
+def form_edit2(request, id):
+    sstr = urllib.parse.parse_qs(id)['q'][0]
+    print(sstr)
+    obj = Item.objects.get(doc_ID=sstr)
+    return form_edit(request, id=obj.pk)
 
 
 @permission_required('library.add_item')

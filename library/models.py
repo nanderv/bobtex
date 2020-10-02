@@ -74,10 +74,10 @@ class ItemTable(tables.Table):
     options = tables.Column(empty_values=(), orderable=False)
 
     def render_authors(self, value, record):
-        return render_authors(record)
+        return record.render_authors()
 
     def render_options(self, record):
-        return render_item_options(record)
+        return record.render_item_options()
 
 
 class Tag(models.Model):

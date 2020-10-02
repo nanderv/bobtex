@@ -1,6 +1,6 @@
 # Source code for article:
 # https://hakibenita.com/django-markdown
-
+import urllib
 from typing import Optional
 import re
 import markdown
@@ -46,14 +46,7 @@ def clean_link(href: str) -> str:
         return href
 
     # Remove fragments or query params before trying to match the url name
-    static = False
-    print(href)
 
-    if href.startswith('~~'):
-        static = True
-        print("HERE")
-        print(href[2:])
-        href = settings.STATIC_URL + 'uploads/' + href[2:]
 
     z = href.split("|")
     href = z[0]
@@ -61,7 +54,8 @@ def clean_link(href: str) -> str:
 
     for part in z:
         if part != href:
-            args.append(part)
+            prt = urllib.parse.urlencode({'q':part})
+            args.append(prt)
     href_parts = re.search(r'#|\?', href)
     if href_parts:
         start_ix = href_parts.start()
@@ -70,13 +64,18 @@ def clean_link(href: str) -> str:
         url_name, url_extra = href, ''
 
     try:
+        print(args)
         url = reverse(url_name, args=args)
+        print(url)
     except NoReverseMatch:
+        print(url_name)
         pass
     else:
+        print(url)
+
         return url + url_extra
 
-
+    print(href)
     return href
 
 
