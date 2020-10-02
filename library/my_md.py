@@ -27,7 +27,7 @@ class InvalidMarkdown(Error):
     def __str__(self) -> str:
         if self.value is None:
             return self.error
-        return f'{self.error} "{self.value}"'
+        return str(self.error)+"::"+ str(self.value)
 
 
 def clean_link(href: str) -> str:
