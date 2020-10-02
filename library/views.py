@@ -82,7 +82,6 @@ def form_edit(request, id):
         obj = Item.objects.get(pk=id)
         form = UploadFileForm(instance=obj)
     rendered = render_md(my_summary)
-    print(my_summary)
     return render(request, 'form.html', {"form": form, "special": special, 'rendered': rendered})
 
 
