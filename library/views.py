@@ -9,6 +9,8 @@ from library.models import Item, ItemTable
 
 from django import forms
 
+from library.my_md import render_md
+
 
 class UploadFileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -63,23 +65,25 @@ def full_tex(request):
 @permission_required('library.change_item')
 def form_edit(request, id):
     special = ""
+    my_summary = ""
 
     obj = Item.objects.get(pk=id)
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES, instance=obj)
-        print(form)
 
         doi = request.POST["tex"]
         if form.is_valid():
-            form.save()
+            instance = form.save()
+            my_summary = instance.summary
             special = "Succesful upload!"
             obj = Item.objects.get(pk=id)
             form = UploadFileForm(instance=obj)
     else:
         obj = Item.objects.get(pk=id)
         form = UploadFileForm(instance=obj)
-
-    return render(request, 'form.html', {"form": form, "special": special})
+    rendered = render_md(my_summary)
+    print(my_summary)
+    return render(request, 'form.html', {"form": form, "special": special, 'rendered': rendered})
 
 
 @permission_required('library.add_item')
@@ -95,7 +99,8 @@ def form_new(request):
             instance.save()
             special = "Succesful upload!"
             form = UploadFileForm()
+            my_summary = instance.summary
     else:
         form = UploadFileForm()
 
-    return render(request, 'form.html', {"form": form, "special": special})
+    return render(request, 'form.html', {"form": form, "special": special, 'rendered': rendered})

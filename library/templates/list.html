@@ -5,6 +5,6 @@
 {% for item in data %}
     <tr  data-toggle="collapse" data-target="#collapse{{ item.pk }}"><td>{{ item.pk }}</td><td>{{ item.render_authors }}</td><td>{{ item.title }}</td><td>{{ item.year }}</td><td>{{ item.render_item_options }}</td></tr>
     <tr class="collapse out" id="collapse{{ item.pk }}fake"></tr>
-    <tr class="collapse out" id="collapse{{ item.pk }}"><td colspan="5"><div class="card">{{ item.summary}}</div></td></tr>
+    <tr class="collapse out" id="collapse{{ item.pk }}"><td colspan="5"><div class="card">{{ item.render_summary|safe}}</div></td></tr>
 {% endfor %}
 </table>

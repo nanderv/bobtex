@@ -30,18 +30,36 @@
 /*
     DEMO STYLE
 */
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
+/* pangolin-regular - latin */
+@font-face {
+  font-family: 'Pangolin';
+  font-style: normal;
+  font-weight: 400;
+  src: url('webfonts/pangolin-v6-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Pangolin Regular'), local('Pangolin-Regular'),
+       url('webfonts/pangolin-v6-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('webfonts/pangolin-v6-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('webfonts/pangolin-v6-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('webfonts/pangolin-v6-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('webfonts/pangolin-v6-latin-regular.svg#Pangolin') format('svg'); /* Legacy iOS */
+}
+/* rubik-500 - latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  src: url('webfonts/rubik-v10-latin-500.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('webfonts/rubik-v10-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('webfonts/rubik-v10-latin-500.woff2') format('woff2'), /* Super Modern Browsers */
+       url('webfonts/rubik-v10-latin-500.woff') format('woff'), /* Modern Browsers */
+       url('webfonts/rubik-v10-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('webfonts/rubik-v10-latin-500.svg#Rubik') format('svg'); /* Legacy iOS */
+}
 
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
-}
-
-a, a:hover, a:focus {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
 }
 
 
@@ -62,36 +80,60 @@ a, a:hover, a:focus {
     display: grid;
     grid-template-rows: 75px 75px 1fr;
     grid-template-columns: 250px auto;
-    overflow:hidden;
+    overflow: hidden;
 }
-#i{
-  font-size: 60px;
+
+#wrapper.isAnonymous {
+
+    grid-template-rows: 75px 75px 1fr;
+    grid-template-columns: 1fr 6fr 1fr;
+    overflow-y: auto;
 }
+
+@media (min-width: 900px) {
+    .hiddenDesktop {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    #sidebar.grayedOut {
+        /*background: var(--sidebar-color);*/
+    }
+}
+
 #sidebar {
     padding-top: 10px;
     text-align: center;
     color: var(--sidebar-color);
     grid-row: 3;
-    grid-row-end:4;
+    grid-row-end: 4;
     grid-column: 1;
-    color: var(--sidebar-color);
     -webkit-transition: left 0.4s cubic-bezier(0.25, 1, 0.25, 1), width 0.4s cubic-bezier(0.25, 1, 0.25, 1);
     transition: left 0.4s cubic-bezier(0.25, 1, 0.25, 1), width 0.4s cubic-bezier(0.25, 1, 0.25, 1);
     z-index: 30;
     background: var(--sidebar-bg-color);
 }
 
-#sidebar.ontop{
-    grid-row:2;
-    grid-row-end:4;
+#rightBar {
+    grid-row: 2;
+    grid-row-end: 4;
+    grid-column: 3;
+    background: var(--sidebar-bg-color);
+}
+
+#sidebar.ontop {
+    grid-row: 2;
+    grid-row-end: 4;
 }
 
 #header {
-    line-height: 40px;
+    line-height: 0px;
     text-align: center;
-    font-size: 32px;
+    padding-left: 100px;
+    font-size: 24px;
     background: var(--header-bg);
     color: var(--header-color);
+    display: flex;
 }
 
 #content {
@@ -100,10 +142,11 @@ a, a:hover, a:focus {
     background: #f0f0f0;
     font-size: 14px;
     grid-row: 2;
-    grid-row-end:4;
+    grid-row-end: 4;
     grid-column: 2;
     padding: 1vh;
-     overflow-y: scroll;
+    overflow-y: auto;
+
 }
 
 #toggle-sidebar {
@@ -129,7 +172,7 @@ a, a:hover, a:focus {
     line-height: 0.8em;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
     #toggle-sidebar {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -142,10 +185,15 @@ a, a:hover, a:focus {
     padding-bottom: 10px;
     grid-row: 1;
     grid-column: 1;
-    grid-column-end:3;
+    grid-column-end: 3;
     z-index: 2;
+    text-align: center;
     /*border-bottom:3px solid var(--belle-red);*/
     box-shadow: 0px 2px 3px var(--belle-red);
+}
+
+#header.isAnonymous {
+    grid-column-end: 4;
 }
 
 #sidebar-header {
@@ -163,11 +211,39 @@ a, a:hover, a:focus {
     box-shadow: 0px 2px 3px var(--belle-red);
 
 }
+.logo-part{
+    font-family: logoFont;
+    font-size:40px;
+}
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
+    .logo-part {
+        width: 100%;
+        z-index: 4;
+    }
+
+    .hiddenMobile {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        left: -200%;
+    }
+
+    .vertical {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        left: -200%;
+    }
+
     #wrapper {
         grid-template-rows: 75px 75px auto;
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
+    }
+
+    #wrapper.isAnonymous {
+        grid-template-rows: 75px 75px auto;
+        grid-template-columns: 100%;
     }
 
     #content {
@@ -177,7 +253,10 @@ a, a:hover, a:focus {
 
     #header {
         grid-column: 1;
-        grid-column-end: 2;
+    }
+
+    #header.isAnonymous {
+        grid-column: 1;
     }
 
     #sidebar-header {
@@ -186,13 +265,15 @@ a, a:hover, a:focus {
 
     #sidebar-header,
     #sidebar, #content {
-        grid-column: 1/3;
+        grid-column: 1;
     }
 
     #sidebar {
         grid-row: 3;
         position: relative;
         left: 0;
+        overflow-y: scroll;
+
     }
 
     #sidebar-header {
@@ -208,7 +289,7 @@ a, a:hover, a:focus {
 
     #sidebar-header.collapsed,
     #sidebar.collapsed {
-        left: -120%;
+        left: -110%;
 
     }
 
@@ -221,26 +302,69 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul p {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
     color: var(--sidebar-color);
 
     padding: 10px;
 }
 
 #sidebar ul li a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
 
+#sidebar-header a:hover,
 #sidebar ul li a:hover {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
     color: #eeeebb;
     color: var(--sidebar-color-active);
 
 }
+
 
 #sidebar ul li.active a:hover {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
     color: #eeeebb;
     color: var(--sidebar-color-active);
 
 }
 
+#sidebar-header a,
+#sidebar a:hover,
+#sidebar a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#header a {
+    color: grey;
+}
+
+
+/* youtube shits */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+}
+
+.video-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

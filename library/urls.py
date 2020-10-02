@@ -24,7 +24,7 @@ urlpatterns = [
                   path('delete-maybe/<slug:id>', delete_maybe),
                   path('delete/<slug:id>', delete),
                   path('bibtex', full_tex),
-                  path('edit/<slug:id>', form_edit),
+                  path('edit/<slug:id>', form_edit, name='link'),
                   path('new', form_new),
                   path('', show_all),
 

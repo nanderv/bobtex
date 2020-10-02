@@ -7,6 +7,7 @@ import django_tables2 as tables
 from django.db.models import CASCADE, SET_NULL
 from django.utils.html import format_html
 
+from library.my_md import render_md
 from projects.models import Project
 
 
@@ -62,6 +63,9 @@ class Item(models.Model):
                 '<i class="fa fa-lg fa-trash"></a>',
                 record.url, record.pk, record.pk)
         return format_html('<a href="/lib/edit/{}">  <i class="fa  fa-lg fa-edit"></i></a><a href="/lib/delete-maybe/{}"><i class="fa  fa-lg fa-trash"></a></a>', record.pk, record.pk)
+
+    def render_summary(self):
+        return render_md(self.summary)
 class ItemTable(tables.Table):
     authors = tables.Column(empty_values=() )
     title = tables.Column(empty_values=())
