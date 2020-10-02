@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <th>Project name</th>
+        <th>Project count</th>
+        <th>set default</th>
+    </tr>
+    <tr>
+        <td>[[default]]</td>
+        <td>{{ dcount }}</td>
+        <td>{% if not user.default_project  %}is default{% else %}<a href="/projects/set_default/None">set default</a>{% endif %}</td>
+
+    </tr>
+    {% for project in data %}
+        <tr>
+            <td>{{ project.name }}</td>
+        <td>{{ project.count }}</td>
+        <td>{% if user.default_project == project %}is default{% else %}<a href="/projects/set_default/{{ project.pk }}">set default</a>{% endif %}</td>
+        </tr>
+    {% endfor %}
+</table>

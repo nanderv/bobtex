@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_tables2',
     'library',
+    'projects',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,4 @@ DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap.html"
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/lib'
+AUTH_USER_MODEL = 'projects.User'

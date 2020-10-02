@@ -13,23 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.shortcuts import redirect
-from django.urls import path, include
-from django.views.generic import RedirectView
+from django.urls import path
 
 import library.urls
-
-
-class SearchRedirectView(RedirectView):
-  url = '/lib'
-
+from library.views import delete, full_tex, delete_maybe, form_edit, form_new
+from projects.views import show_all, set_default, new
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('lib/', include('library.urls')),
-    path('projects/', include('projects.urls')),
-
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('', SearchRedirectView.as_view())
+              path('set_default/<slug:id>', set_default),
+              path('new', new),
+              path('', show_all),
 ]

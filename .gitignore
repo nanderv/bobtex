@@ -1,6 +1,6 @@
 .idea/
 /venv/
 */*.pyc
-/db.sqlite3
+/dbold.sqlite3
 root/*
 uploads/*
