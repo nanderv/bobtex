@@ -26,7 +26,7 @@ class Item(models.Model):
     year = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=CASCADE, null=True)
     summary = models.TextField(default="")
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
     def save(self, *args, **kwargs):
         self.title = self.my_title
         self.authors = self.my_authors
