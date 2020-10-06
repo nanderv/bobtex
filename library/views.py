@@ -111,5 +111,5 @@ def form_new(request):
             my_summary = instance.summary
     else:
         form = UploadFileForm()
-
+    rendered = ""
     return render(request, 'form.html', {"form": form, "special": special, 'rendered': rendered})
