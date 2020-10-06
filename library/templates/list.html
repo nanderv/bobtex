@@ -1,10 +1,10 @@
 {% load render_table from django_tables2 %}
 
 <table class="table table-striped">
-<tr><th>ID</th><th>Authors</th><th>Title</th><th>Year</th><th>Options</th></tr>
+<tr><th>#</th><th>ID</th><th>Title</th><th>Year</th><th>Tags</th><th>Options</th></tr>
 {% for item in data %}
-    <tr  data-toggle="collapse" data-target="#collapse{{ item.pk }}"><td>{{ item.pk }}</td><td>{{ item.render_authors }}</td><td>{{ item.title }}</td><td>{{ item.year }}</td><td>{{ item.render_item_options }}</td></tr>
+    <tr  data-toggle="collapse" data-target="#collapse{{ item.pk }}"><td>{{ item.pk }}</td><td>{{ item.my_ID }}</td><td>{{ item.title }}</td><td>{{ item.year }}</td><td>{% for tag in item.tags.all %}<div class="badge btn-primary">{{ tag }}</div>{% endfor %}</td><td>{{ item.render_item_options }}</td></tr>
     <tr class="collapse out" id="collapse{{ item.pk }}fake"></tr>
-    <tr class="collapse out" id="collapse{{ item.pk }}"><td colspan="5"><div class="card">{{ item.render_summary|safe}}</div></td></tr>
+    <tr class="collapse out" id="collapse{{ item.pk }}"><td colspan="5"><div class="card">{{ item.render_authors }}<br>{{ item.render_summary|safe}}</div></td></tr>
 {% endfor %}
 </table>

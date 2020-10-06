@@ -11,6 +11,11 @@ from library.my_md import render_md
 from projects.models import Project
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+    def __str__(self):
+        return self.name
+
 class Item(models.Model):
     file = models.FileField(null=True, blank=True, upload_to="uploads/")
     tex = models.TextField()
@@ -21,7 +26,7 @@ class Item(models.Model):
     year = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=CASCADE, null=True)
     summary = models.TextField(default="")
-
+    tags = models.ManyToManyField(Tag)
     def save(self, *args, **kwargs):
         self.title = self.my_title
         self.authors = self.my_authors
@@ -80,6 +85,3 @@ class ItemTable(tables.Table):
         return record.render_item_options()
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=255)
-    item = models.ForeignKey(Item, on_delete=CASCADE)

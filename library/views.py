@@ -22,7 +22,7 @@ class UploadFileForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        fields = ['tex', 'summary', 'file', 'url']
+        fields = ['tex', 'summary', 'file', 'tags', 'url']
 
 
 @permission_required('library.view_item')
