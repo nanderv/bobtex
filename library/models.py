@@ -13,6 +13,7 @@ from projects.models import Project
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
+    color = models.CharField(max_length=255, default='red')
     def __str__(self):
         return self.name
 

@@ -18,7 +18,7 @@
         <th>Options</th>
     </tr>
 {% for item in data %}
-    <tr  data-toggle="collapse" data-target="#collapse{{ item.pk }}"><td>{{ item.pk }}</td><td>{{ item.my_ID }}</td><td>{{ item.title }}</td><td>{{ item.year }}</td><td>{% for tag in item.tags.all %}<a href="?tag={{ tag.name }}&order={{ request.GET.order }}&reversed={{ request.GET.reversed }}"<div class="badge btn-primary">{{ tag }}</div>{% endfor %}</td><td>{{ item.render_item_options }}</td></tr>
+    <tr  data-toggle="collapse" data-target="#collapse{{ item.pk }}"><td>{{ item.pk }}</td><td>{{ item.my_ID }}</td><td>{{ item.title }}</td><td>{{ item.year }}</td><td>{% for tag in item.tags.all %}<a style="background-color:{{ tag.color }};" href="?tag={{ tag.name }}&order={{ request.GET.order }}&reversed={{ request.GET.reversed }}"<div class="badge btn-primary">{{ tag }}</div>{% endfor %}</td><td>{{ item.render_item_options }}</td></tr>
     <tr class="collapse out" id="collapse{{ item.pk }}fake"></tr>
     <tr class="collapse out" id="collapse{{ item.pk }}"><td colspan="5"><div class="card">{{ item.render_authors }}<br>{{ item.render_summary|safe}}</div></td></tr>
 {% endfor %}
