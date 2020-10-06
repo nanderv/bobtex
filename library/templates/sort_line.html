@@ -1,0 +1,11 @@
+<th>
+    {% if request.GET.order == field_name %}
+        {% if request.GET.reversed %}
+            <a href="?tag={{ request.GET.tag }}">{{ text_name }} \/</a>
+        {% else %}
+            <a href="?order={{ field_name }}&reversed=1&tag={{ request.GET.tag }}">{{ text_name }} /\</a>
+        {% endif %}
+    {% else %}
+        <a href="?order={{ field_name }}&tag={{ request.GET.tag }}">{{ text_name }}</a>
+    {% endif %}
+</th>

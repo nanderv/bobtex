@@ -38,10 +38,14 @@ def show_all(request):
     else:
         form = UploadFileForm()
     t = Item.objects.filter(project=request.user.default_project)
-    table = ItemTable(t)
-    RequestConfig(request, paginate=False).configure(table)
+    if request.GET.get('tag'):
+        t = t.filter(tags__name=request.GET.get('tag'))
+    if request.GET.get('order'):
+        t = t.order_by(request.GET['order'])
+        if request.GET.get('reversed'):
+            t = t.reverse()
 
-    return render(request, 'main_page.html', {"table": table, "data": t, "form": form, "special": special})
+    return render(request, 'main_page.html', {"data": t, "form": form, "special": special})
 
 
 @permission_required('library.delete_item')
