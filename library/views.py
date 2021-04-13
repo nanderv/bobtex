@@ -7,7 +7,7 @@ from django.shortcuts import render
 # Create your views here.
 from django_tables2 import RequestConfig, LazyPaginator
 
-from library.models import Item, ItemTable
+from library.models import Item, ItemTable, Tag
 
 from django import forms
 
@@ -22,7 +22,7 @@ class UploadFileForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        fields = ['tex', 'summary', 'file', 'url']
+        fields = ['tex', 'summary', 'file', 'tags', 'url']
 
 
 @permission_required('library.view_item')
@@ -38,10 +38,14 @@ def show_all(request):
     else:
         form = UploadFileForm()
     t = Item.objects.filter(project=request.user.default_project)
-    table = ItemTable(t)
-    RequestConfig(request, paginate=False).configure(table)
+    if request.GET.get('tag'):
+        t = t.filter(tags__name=request.GET.get('tag'))
+    if request.GET.get('order'):
+        t = t.order_by(request.GET['order'])
+        if request.GET.get('reversed'):
+            t = t.reverse()
 
-    return render(request, 'main_page.html', {"table": table, "data": t, "form": form, "special": special})
+    return render(request, 'main_page.html', {"data": t, "form": form, "special": special})
 
 
 @permission_required('library.delete_item')
@@ -106,10 +110,14 @@ def form_new(request):
             instance = form.save(commit=False)
             instance.project = request.user.default_project
             instance.save()
+            tags = request.POST.getlist('tags')
+            for z in tags:
+                instance.tags.add(Tag.objects.get(pk=z))
+            instance.save()
             special = "Succesful upload!"
             form = UploadFileForm()
             my_summary = instance.summary
     else:
         form = UploadFileForm()
-
+    rendered = ""
     return render(request, 'form.html', {"form": form, "special": special, 'rendered': rendered})
