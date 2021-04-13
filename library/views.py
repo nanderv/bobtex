@@ -7,7 +7,7 @@ from django.shortcuts import render
 # Create your views here.
 from django_tables2 import RequestConfig, LazyPaginator
 
-from library.models import Item, ItemTable
+from library.models import Item, ItemTable, Tag
 
 from django import forms
 
@@ -109,6 +109,12 @@ def form_new(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.project = request.user.default_project
+            instance.save()
+            for z in request.POST['tags']:
+                print(z)
+                instance.tags.add(Tag.objects.get(pk=z))
+
+
             instance.save()
             special = "Succesful upload!"
             form = UploadFileForm()
